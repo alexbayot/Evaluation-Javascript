@@ -1,6 +1,8 @@
 let matches = document.querySelector('.matches');
 let odds = document.querySelector('.odds')
 let odd = document.querySelector('.odd')
+let betsAdded = []
+let yourBets = document.querySelector('.your-bets')
 
 //injecter les matchs à partir du fichier .json
 fetch("js/datas.json")  
@@ -17,19 +19,29 @@ fetch("js/datas.json")
             let match_id = match.match_id;
             matches.innerHTML += `<div class= "match">${hometeam} - ${awayteam}<div class="odds"><div class= "odd">${home_odd}</div><div class= "odd">${draw_odd}</div><div class= "odd">${away_odd}</div></div></div>`;
         });
-         // Add event listener to each odd element
-        document.querySelectorAll('.odd').forEach(odd => {
-            odd.addEventListener('click', function() {
-                // Add "active" class to the clicked odd element
-                document.querySelectorAll('.odd').forEach(item => {
-                    odd.classList.add('active');   
-                });
-                
-                
+ // Add event listener to each odd element within each match
+ document.querySelectorAll('.match .odd').forEach(odd => {
+    odd.addEventListener('click', function(event) {
+        // Remove "active" class from all odd elements within the current match
+        event.currentTarget.parentElement.querySelectorAll('.odd').forEach(odd => {
+            odd.classList.remove('active');
+        });
+        // Add "active" class to the clicked odd element
+        event.target.classList.add('active');
+        // Update total bets count
+        totalBets();
             });
         });
     })   
     .catch(error => {    
         console.error("Erreur lors de la récupération des données :", error);  
     });
+
+//Add "active" divs to give total bets added to cart
+function totalBets() {
+    let activeOdds = document.querySelectorAll('.odd.active');
+    yourBets.innerHTML = `Your bets (${activeOdds.length})`
+}
+totalBets()
+
        

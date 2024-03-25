@@ -7,12 +7,13 @@ body{
     background: rgb(34,25,74);
     background: linear-gradient(180deg, rgba(34,25,74,1) 0%, rgba(85,6,85,1) 73%);
     padding: 20px  30px;
-    i{
+    .icon{
         color: white;
         font-size: 26px;
         position: fixed;
         bottom: 50px;
         left: 100px;
+        cursor: pointer;
     }
 }
 .top-menu{
@@ -32,6 +33,10 @@ body{
         &:hover{
             font-weight: bold;
         }
+    }
+    .new-background {
+        background: rgb(132,20,191);
+        background: linear-gradient(180deg, rgba(132,20,191,1) 0%, rgba(246,222,255,1) 73%);
     }
 }
 .secondary-menu{
@@ -64,10 +69,16 @@ body{
     }
 }
 .your-bets{
-    position: fixed;
+    position: absolute;
     bottom: 0;
+    right: 50px;
     z-index: 10000;
     background-color: #550655;
+    color: white;
+    font-size: 20px;
+    padding: 5px 100px;
+    border-radius: 10px 10px 0 0;
+    cursor: pointer;
 }
 .matches{
     margin-top: 70px;
@@ -81,6 +92,7 @@ body{
         padding: 10px 0 10px 10px;
         &:hover{
             background-color: #f5e7fa;
+            border-radius: 10px;
             padding: 10px 0 10px 10px;
         }
     }

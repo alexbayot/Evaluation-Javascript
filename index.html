@@ -10,7 +10,7 @@
 <body>
     <div class="side-bar">
         <img src="images/logo.webp" alt="logo">
-        <div class="icon"><i class="fa-solid fa-moon"></i></div>
+        <div class="icon-container"><i class="fa-solid fa-moon icon"></i></div>
     </div>
     <div class="menus">
         <nav class="top-menu">
@@ -32,7 +32,15 @@
         <div class="image">
             <img src="images/bg1.webp" alt="player">
         </div>
-        <div class="your-bets">Your bets</div>
+        <div class="your-bets">
+            <div class="detail_bets">
+            </div>
+            <div class="earnings">
+                Votre mise <textarea name="mise" id="" cols="3" rows="1"></textarea>
+                Cote totale <span class="cote"></span>
+                Gain potentiel <span class="gain"></span>
+            </div>
+        </div>
     </main>
     <script type="module" src="js/main.js"></script>
 </body>
