@@ -4,11 +4,11 @@ let odd = document.querySelector('.odd')
 let betsAdded = []
 let yourBets = document.querySelector('.your-bets')
 
-//injecter les matchs à partir du fichier .json
-fetch("js/datas.json")  
-    .then(response => response.json())  
-    .then(data => {  
-        console.log(data);  
+// Inject match data from the JSON file
+fetch("js/datas.json")
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
         matches.innerHTML = "";
         data.matchs.forEach(function(match) {
             let hometeam = match.hometeam;
@@ -17,19 +17,25 @@ fetch("js/datas.json")
             let draw_odd = match.draw_odd;
             let away_odd = match.away_odd;
             let match_id = match.match_id;
-            matches.innerHTML += `<div class= "match">${hometeam} - ${awayteam}<div class="odds"><div class= "odd">${home_odd}</div><div class= "odd">${draw_odd}</div><div class= "odd">${away_odd}</div></div></div>`;
+            matches.innerHTML += `<div class="match">
+                                        ${hometeam} - ${awayteam}
+                                        <div class="odds">
+                                            <div class="odd">${home_odd}</div>
+                                            <div class="odd">${draw_odd}</div>
+                                            <div class="odd">${away_odd}</div>
+                                        </div>
+                                    </div>`;
         });
- // Add event listener to each odd element within each match
- document.querySelectorAll('.match .odd').forEach(odd => {
-    odd.addEventListener('click', function(event) {
-        // Remove "active" class from all odd elements within the current match
-        event.currentTarget.parentElement.querySelectorAll('.odd').forEach(odd => {
-            odd.classList.remove('active');
-        });
-        // Add "active" class to the clicked odd element
-        event.target.classList.add('active');
-        // Update total bets count
-        totalBets();
+        // Add event listener to each match
+        document.querySelectorAll('.match').forEach(match => {
+            match.addEventListener('click', function(event) {
+                // Toggle "active" class for the clicked odd element
+                if (event.target.classList.contains('odd')) {
+                    event.target.classList.toggle('active');
+                    
+                    // Update total bets count
+                    totalBets();
+                }
             });
         });
     })   
