@@ -2,6 +2,10 @@ body{
     font-family: Arial, Helvetica, sans-serif;
     display: flex;
 }
+.dark-mode {
+    background-color: black; /* Dark mode background color */
+    color: #ffffff; /* Dark mode text color */
+}
 .side-bar{
     height: 95.8vh;
     background: rgb(34,25,74);
