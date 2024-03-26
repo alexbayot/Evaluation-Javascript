@@ -68,7 +68,6 @@ fetch("js/datas.json")
                     subtitle.innerHTML = matchHTML
                     detailsRight.innerHTML = odd1.innerHTML
                     cote.innerHTML = odd1.innerHTML
-                    gain.innerHTML = parseInt(cote*mise)
                 } else if (thisOdd.innerHTML == odd2.innerHTML) {
                     detailsLeft.innerHTML = "Match Nul"
                     subtitle.innerHTML = matchHTML
@@ -113,7 +112,20 @@ darkModeToggle.addEventListener('click', toggleDarkMode);
 function toggleDarkMode() {
     // Toggle the 'dark-mode' class on the body element
     document.body.classList.toggle('dark-mode');
+
+    // Save dark mode preference in local storage
+    localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
 }
+
+// Check dark mode preference on page load
+document.addEventListener('DOMContentLoaded', function() {
+    const darkModeEnabled = localStorage.getItem('darkMode');
+
+    // If dark mode preference exists and is true, enable dark mode
+    if (darkModeEnabled === 'true') {
+        document.body.classList.add('dark-mode');
+    }
+});
 
 function selectRandomImage() {
     // List of image filenames in the folder
@@ -132,7 +144,7 @@ function selectRandomImage() {
     // Create an <img> element
     const imgElement = document.createElement('img');
   
-    imgElement.src = 'images' + randomImageFilename;
+    imgElement.src = '/images/' + randomImageFilename;
   
     // Append the <img> element to a container in your HTML
     document.getElementById('image').appendChild(imgElement); 
@@ -141,6 +153,7 @@ function selectRandomImage() {
   // Call the function to select a random image
   selectRandomImage();
 
+  //multiplication of cote by mise
   button.addEventListener('click', function(){
     // Get the input value from the '.mise' element
     let userInput = parseFloat(document.querySelector('.mise').value);
@@ -150,6 +163,9 @@ function selectRandomImage() {
 
     // Calculate the gain
     let calculatedGain = userInput * coteValue;
+
+    // Round the calculated gain to 2 decimal places
+    calculatedGain = calculatedGain.toFixed(2);
 
     // Display the calculated gain in the 'gain' element
     gain.innerHTML = calculatedGain + '€';
