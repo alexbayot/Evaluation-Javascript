@@ -5,7 +5,6 @@ let betsAdded = []
 let yourBets = document.querySelector('.your-bets')
 let yourBetsWrapper = document.querySelector('.your-bets-wrapper')
 let detailBets = document.querySelector('.detail_bets')
-let detailsLeft = document.querySelector('.details-left')
 let subtitle  = document.querySelector('.subtitle')
 let earningsWrapper = document.querySelector('.earnings-wrapper')
 let matchHTML = ''
@@ -39,7 +38,6 @@ fetch("js/datas.json")
         // Add event listener to each match
         document.querySelectorAll('.match').forEach(match => {
             match.addEventListener('click', function(event) {
-                // Toggle "active" class for the clicked odd element
                 if (event.target.classList.contains('active')) {
                     event.target.classList.remove('active');
                 } else {
@@ -62,24 +60,27 @@ fetch("js/datas.json")
                 let odd1 = match.querySelector('.odd:nth-child(1)');
                 let odd2 = match.querySelector('.odd:nth-child(2)');
                 let odd3 = match.querySelector('.odd:nth-child(3)');
-                console.log(mise.value);
-                if (thisOdd.innerHTML == odd1.innerHTML) {
-                    detailsLeft.innerHTML = matchLeft
-                    subtitle.innerHTML = matchHTML
-                    detailsRight.innerHTML = odd1.innerHTML
-                    cote.innerHTML = odd1.innerHTML
-                } else if (thisOdd.innerHTML == odd2.innerHTML) {
-                    detailsLeft.innerHTML = "Match Nul"
-                    subtitle.innerHTML = matchHTML
-                    detailsRight.innerHTML = odd2.innerHTML;
-                    cote.innerHTML = odd2.innerHTML
-                } else if (thisOdd.innerHTML == odd3.innerHTML) {
-                    detailsLeft.innerHTML = matchRight
-                    subtitle.innerHTML = matchHTML
-                    detailsRight.innerHTML = odd3.innerHTML;
-                    cote.innerHTML = odd3.innerHTML
+                let detailsLeft = document.querySelector('.details-left');
+                
+                if (thisOdd) {
+                    if (thisOdd.innerHTML == odd1.innerHTML) {
+                        detailsLeft.innerHTML = matchLeft
+                        subtitle.innerHTML = matchHTML
+                        detailsRight.innerHTML = odd1.innerHTML
+                        cote.innerHTML = odd1.innerHTML
+                    } else if (thisOdd.innerHTML == odd2.innerHTML) {
+                        detailsLeft.innerHTML = "Match Nul"
+                        subtitle.innerHTML = matchHTML
+                        detailsRight.innerHTML = odd2.innerHTML;
+                        cote.innerHTML = odd2.innerHTML
+                    } else if (thisOdd.innerHTML == odd3.innerHTML) {
+                        detailsLeft.innerHTML = matchRight
+                        subtitle.innerHTML = matchHTML
+                        detailsRight.innerHTML = odd3.innerHTML;
+                        cote.innerHTML = odd3.innerHTML
+                    }
                 }
-                totalBets(matchHTML);
+                totalBets(matchHTML,thisOdd);
             });
         });
     })   
@@ -88,85 +89,66 @@ fetch("js/datas.json")
     });
 
 //Add "active" divs to give total bets added to cart
-function totalBets(matchHTML) {
+function totalBets(matchHTML,thisOdd) {
     let activeOdds = document.querySelectorAll('.odd.active');
     if (activeOdds.length > 0) {
         detailBets.classList.remove('hidden');
         earningsWrapper.classList.remove('hidden');
-        detailBets.innerHTML = detailBets.innerHTML + `<div>`+matchHTML+`</div>`;
+        //detailBets.innerHTML = detailBets.innerHTML + <div>+matchHTML+</div>;
+        detailBets.innerHTML = detailBets.innerHTML + `<div class="details-wrapper">
+                   <div class="details-left">
+                        <div class="subtitle">`+matchHTML+`</div>
+                    </div>        
+                    <div class="details-right">`+thisOdd.innerHTML+`</div>
+                    <div>
+                        <i class="fa-solid fa-trash-can delete-icon"></i>
+                    </div>
+                </div>`
     } else {
         detailBets.classList.add('hidden');
         earningsWrapper.classList.add('hidden');
     }
-    yourBets.innerHTML = `Your bets (${activeOdds.length})`
+    yourBets.innerHTML = `Your Bets ${activeOdds.length}`
 }
 totalBets(matchHTML)
 
-//dark mode
+//dark mode + local storage
 const darkModeToggle = document.getElementById('darkModeToggle');
 
-// Add click event listener to the dark mode toggle icon
 darkModeToggle.addEventListener('click', toggleDarkMode);
-
-// Function to toggle dark mode
 function toggleDarkMode() {
-    // Toggle the 'dark-mode' class on the body element
     document.body.classList.toggle('dark-mode');
-
-    // Save dark mode preference in local storage
     localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
 }
-
-// Check dark mode preference on page load
 document.addEventListener('DOMContentLoaded', function() {
     const darkModeEnabled = localStorage.getItem('darkMode');
-
-    // If dark mode preference exists and is true, enable dark mode
     if (darkModeEnabled === 'true') {
         document.body.classList.add('dark-mode');
     }
 });
 
+//random player image
+
 function selectRandomImage() {
-    // List of image filenames in the folder
     const imageFilenames = [
         'bg1.webp',
         'bg2.webp',
         'bg3.webp',
     ];
-  
-    // Choose a random index from the list of filenames
     const randomIndex = Math.floor(Math.random() * imageFilenames.length);
-  
-    // Get the randomly chosen image filename
     const randomImageFilename = imageFilenames[randomIndex];
-  
-    // Create an <img> element
     const imgElement = document.createElement('img');
-  
     imgElement.src = '/images/' + randomImageFilename;
-  
-    // Append the <img> element to a container in your HTML
     document.getElementById('image').appendChild(imgElement); 
   }
-  
-  // Call the function to select a random image
   selectRandomImage();
 
-  //multiplication of cote by mise
+  //calculation of total potential earnings
   button.addEventListener('click', function(){
-    // Get the input value from the '.mise' element
     let userInput = parseFloat(document.querySelector('.mise').value);
-
-    // Get the value of 'cote' element
-    let coteValue = parseFloat(cote.innerHTML); // Assuming cote is a DOM element containing the value
-
-    // Calculate the gain
+    let coteValue = parseFloat(cote.innerHTML);
     let calculatedGain = userInput * coteValue;
 
-    // Round the calculated gain to 2 decimal places
     calculatedGain = calculatedGain.toFixed(2);
-
-    // Display the calculated gain in the 'gain' element
     gain.innerHTML = calculatedGain + '€';
 });
