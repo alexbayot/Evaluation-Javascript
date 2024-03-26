@@ -59,6 +59,9 @@ body{
         }
     }
 }
+.hidden {
+    display:none !important;
+}
 .image{
     position: fixed;
     bottom: 0;
@@ -68,18 +71,69 @@ body{
         display: block;
     }
 }
-.your-bets{
-    position: absolute;
+.your-bets-wrapper {
+    position: fixed;
     bottom: 0;
     right: 50px;
     z-index: 10000;
-    background-color: #550655;
-    color: white;
-    font-size: 20px;
-    padding: 5px 100px;
+    background-color: #fff;
     border-radius: 10px 10px 0 0;
     cursor: pointer;
+    .your-bets{
+        position:relative;
+        background-color: #550655;
+        color: white;
+        font-size: 20px;
+        padding: 5px 100px;
+        border-radius: 10px 10px 0 0;
+        text-align:center;
+    }
+    .detail_bets {
+        position:relative;
+        padding: 20px 30px;
+        .details-wrapper{
+            display: flex;
+            .details-left{
+                margin-right:20px;
+                font-weight: bold;
+                .subtitle{
+                    font-weight: normal;
+                    font-size: 12px;
+                }
+            }  
+        }
+    }
+    .earnings {
+        position: relative;
+        padding: 5px 10px;
+        line-height: 35px;
+        input {
+            width: 60px;
+            height: 30px;
+            border-radius: 5px;
+        }
+    }
+    .earnings-left {
+        text-align:left;
+    }
+    .earnings-right {
+        text-align:right;
+    }
+    .earnings-wrapper{
+        background-color: #dfdfdf;
+    }
 }
+.bold {
+    font-weight:bold;
+}
+
+.flex {
+    display:flex;
+}
+.flex50 {
+    width: 50%;
+}
+
 .matches{
     margin-top: 70px;
     margin-left: 70px;
